@@ -61,7 +61,7 @@ function percentage() {
 }
 
 function plusMinus() {
-  if (operandFlag) {
+  if (operandFlag || operand2 === "") {
     if (operand1[0] === "-") {
       operand1 = operand1.slice(1);
     } else {
@@ -78,8 +78,11 @@ function plusMinus() {
 }
 
 function equalsPress() {
-  operandFlag = !doMath();
-  addListenerToDecimal();
+  if (doMath()) {
+    addListenerToDecimal();
+    operandFlag = false;
+  }
+  if (operand1 === "" || operand1 === "." || operand1 === "-") operand = true;
   display();
 }
 
@@ -123,6 +126,7 @@ function recordOperation() {
 function operandsAccepted() {
   if (!operand1 || !operand2) return false; // one is an empty string.
   if (operand1 === "." || operand2 === ".") return false;
+  if (operand1 === "-" || operand2 === "-") return false;
   return true;
 }
 
