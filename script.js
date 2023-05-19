@@ -32,6 +32,7 @@ window.addEventListener("keydown", buttonDown);
 function buttonDown(event) {
   equalsPress(event);
   keyDigit(event);
+  percentage(event);
 }
 function display() {
   operand1.length > 9
@@ -60,7 +61,8 @@ function shortScientific(string) {
   return `${smallCoeff}e${numInSciNot.exponent}`;
 }
 
-function percentage() {
+function percentage(event) {
+  if (event.key !== "%" && this.textContent !== "%") return;
   operandFlag
     ? (operand1 = Number(operand1) / 100)
     : (operand2 = Number(operand2) / 100);
