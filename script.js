@@ -19,6 +19,9 @@ function reset() {
   operand2 = "";
   operationSaved = "";
   addListenerToDecimal();
+  console.log(
+    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
+  );
 }
 
 function addListenerToDecimal() {
@@ -41,8 +44,9 @@ function recordDigit() {
 function recordOperation() {
   if (operationSaved) {
     // already an operation saved
-    doMath();
-    operandFlag = !operandFlag;
+    if (doMath()) {
+      operandFlag = !operandFlag;
+    } else return;
   }
   operationSaved = this.textContent;
   operandFlag = !operandFlag;
@@ -69,12 +73,14 @@ function mathAdd() {
   operand1 = Number(operand1) + Number(operand2);
   operand2 = "";
   operationSaved = "";
+  return true;
 }
 
 function mathMult() {
   operand1 = Number(operand1) * Number(operand2);
   operand2 = "";
   operationSaved = "";
+  return true;
 }
 
 function mathDiv() {
@@ -82,4 +88,11 @@ function mathDiv() {
   operand1 = Number(operand1) / Number(operand2);
   operand2 = "";
   operationSaved = "";
+  return true;
+}
+
+function divisionByZero() {
+  alert("you really are a moron...");
+  reset();
+  return false;
 }
