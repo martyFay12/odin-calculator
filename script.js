@@ -11,7 +11,18 @@ operations.forEach((operation) =>
   operation.addEventListener("click", recordOperation)
 );
 const decimalButton = document.querySelector(".decimal-digit");
+const equalsButton = document.querySelector(".equals");
+equalsButton.addEventListener("click", equalsPress);
 reset();
+
+function equalsPress() {
+  doMath();
+  addListenerToDecimal();
+  operandFlag = !operandFlag;
+  console.log(
+    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
+  );
+}
 
 function reset() {
   operandFlag = true;
