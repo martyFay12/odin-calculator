@@ -57,9 +57,8 @@ function plusMinus() {
 }
 
 function equalsPress() {
-  doMath();
+  operandFlag = !doMath();
   addListenerToDecimal();
-  operandFlag = !operandFlag;
   display();
 }
 
@@ -95,17 +94,24 @@ function recordOperation() {
     } else return;
   }
   operationSaved = this.textContent;
-  operandFlag = !operandFlag;
+  operandFlag = false;
   display();
   addListenerToDecimal();
 }
 
+function operandsAccepted() {
+  if (!operand1 || !operand2) return false; // one is an empty string.
+  if (operand1 === "." || operand2 === ".") return false;
+  return true;
+}
+
 function doMath() {
+  if (!operandsAccepted()) return false;
   switch (operationSaved) {
     case "+":
       return mathAdd(operand1, operand2);
     case "-":
-      return mathAdd(operand1, "-" + operand2);
+      return mathSub(operand1, operand2);
     case "*":
       return mathMult(operand1, operand2);
     case "/":
@@ -115,6 +121,13 @@ function doMath() {
 
 function mathAdd() {
   operand1 = Number(operand1) + Number(operand2);
+  operand2 = "";
+  operationSaved = "";
+  return true;
+}
+
+function mathSub() {
+  operand1 = Number(operand1) - Number(operand2);
   operand2 = "";
   operationSaved = "";
   return true;
