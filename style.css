@@ -57,11 +57,13 @@ button {
   width: 210px;
 }
 
-.digit {
+.digit,
+.decimal-digit {
   background-color: rgb(250, 222, 188);
 }
 
-.digit:hover {
+.digit:hover,
+.decimal-digit:hover {
   background-color: rgb(251, 199, 136);
 }
 
