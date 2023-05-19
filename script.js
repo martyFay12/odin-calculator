@@ -1,4 +1,5 @@
 let operandFlag = true;
+let acceptDecimalFlag = true;
 let operand1 = "";
 let operand2 = "";
 let operationSaved = "";
@@ -25,6 +26,8 @@ reset();
 clearButton.addEventListener("click", reset);
 plusMinusButton.addEventListener("click", plusMinus);
 percentButton.addEventListener("click", percentage);
+decimalButton.addEventListener("click", recordDigit);
+window.addEventListener("keydown", keyDigit);
 
 function display() {
   operand1.length > 9
@@ -79,7 +82,7 @@ function plusMinus() {
 
 function equalsPress() {
   if (doMath()) {
-    addListenerToDecimal();
+    acceptDecimalFlag = true;
     operandFlag = false;
   }
   if (operand1 === "" || operand1 === "." || operand1 === "-") operand = true;
@@ -91,23 +94,28 @@ function reset() {
   operand1 = "";
   operand2 = "";
   operationSaved = "";
-  addListenerToDecimal();
+  acceptDecimalFlag = true;
   display();
 }
 
-function addListenerToDecimal() {
-  decimalButton.addEventListener("click", recordDigit);
+function isNumeric(string) {
+  return !isNaN(string) && !isNaN(parseFloat(string));
 }
 
-function removeListenerFromDecimal() {
-  decimalButton.removeEventListener("click", recordDigit);
-}
-
-function recordDigit() {
-  const digit = this.textContent;
+function keyDigit(event) {
+  if (!isNumeric(event.key) && event.key !== ".") return;
+  const digit = event.key;
+  if (digit === "." && !acceptDecimalFlag) return;
   operandFlag ? (operand1 += digit) : (operand2 += digit);
   display();
-  if (digit === ".") removeListenerFromDecimal();
+  if (digit === ".") acceptDecimalFlag = false;
+}
+function recordDigit() {
+  const digit = this.textContent;
+  if (digit === "." && !acceptDecimalFlag) return;
+  operandFlag ? (operand1 += digit) : (operand2 += digit);
+  display();
+  if (digit === ".") acceptDecimalFlag = false;
 }
 
 function recordOperation() {
@@ -120,7 +128,7 @@ function recordOperation() {
   operationSaved = this.textContent;
   operandFlag = false;
   display();
-  addListenerToDecimal();
+  acceptDecimalFlag = true;
 }
 
 function operandsAccepted() {
