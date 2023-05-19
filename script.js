@@ -11,6 +11,9 @@ const equalsButton = document.querySelector(".equals");
 const clearButton = document.querySelector(".clear");
 const plusMinusButton = document.querySelector(".plus-minus");
 const percentButton = document.querySelector(".percent");
+const displaySection1 = document.querySelector(".operand1");
+const displaySection2 = document.querySelector(".operation-selected");
+const displaySection3 = document.querySelector(".screen-bottom");
 
 // ADD EVENT LISTENERS
 digits.forEach((digit) => digit.addEventListener("click", recordDigit));
@@ -23,13 +26,17 @@ clearButton.addEventListener("click", reset);
 plusMinusButton.addEventListener("click", plusMinus);
 percentButton.addEventListener("click", percentage);
 
+function display() {
+  displaySection1.textContent = operand1;
+  displaySection2.textContent = operationSaved;
+  displaySection3.textContent = operand2;
+}
+
 function percentage() {
   operandFlag
     ? (operand1 = Number(operand1) / 100)
     : (operand2 = Number(operand2) / 100);
-  console.log(
-    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
-  );
+  display();
 }
 
 function plusMinus() {
@@ -46,18 +53,14 @@ function plusMinus() {
       operand2 = "-" + operand2;
     }
   }
-  console.log(
-    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
-  );
+  display();
 }
 
 function equalsPress() {
   doMath();
   addListenerToDecimal();
   operandFlag = !operandFlag;
-  console.log(
-    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
-  );
+  display();
 }
 
 function reset() {
@@ -66,9 +69,7 @@ function reset() {
   operand2 = "";
   operationSaved = "";
   addListenerToDecimal();
-  console.log(
-    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
-  );
+  display();
 }
 
 function addListenerToDecimal() {
@@ -82,9 +83,7 @@ function removeListenerFromDecimal() {
 function recordDigit() {
   const digit = this.textContent;
   operandFlag ? (operand1 += digit) : (operand2 += digit);
-  console.log(
-    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
-  );
+  display();
   if (digit === ".") removeListenerFromDecimal();
 }
 
@@ -97,9 +96,7 @@ function recordOperation() {
   }
   operationSaved = this.textContent;
   operandFlag = !operandFlag;
-  console.log(
-    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
-  );
+  display();
   addListenerToDecimal();
 }
 

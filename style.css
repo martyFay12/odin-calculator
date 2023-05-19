@@ -40,7 +40,15 @@ button {
   text-align: right;
   padding: 0 10px;
   background-color: lightgrey;
-  margin: 5px 10px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 130px;
+  width: 430px;
+}
+.screen-top {
+  display: flex;
+  justify-content: space-between;
 }
 
 .row {
