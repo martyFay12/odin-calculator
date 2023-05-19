@@ -10,13 +10,23 @@ const operations = document.querySelectorAll(".operation");
 operations.forEach((operation) =>
   operation.addEventListener("click", recordOperation)
 );
+const decimalButton = document.querySelector(".decimal-digit");
+reset();
 
 function reset() {
   operandFlag = true;
   operand1 = "";
   operand2 = "";
   operationSaved = "";
-  addListenterToDecimal();
+  addListenerToDecimal();
+}
+
+function addListenerToDecimal() {
+  decimalButton.addEventListener("click", recordDigit);
+}
+
+function removeListenerFromDecimal() {
+  decimalButton.removeEventListener("click", recordDigit);
 }
 
 function recordDigit() {
@@ -25,6 +35,7 @@ function recordDigit() {
   console.log(
     `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
   );
+  if (digit === ".") removeListenerFromDecimal();
 }
 
 function recordOperation() {
@@ -37,6 +48,7 @@ function recordOperation() {
   console.log(
     `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
   );
+  addListenerToDecimal();
 }
 
 function doMath() {
