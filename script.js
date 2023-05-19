@@ -14,6 +14,8 @@ const decimalButton = document.querySelector(".decimal-digit");
 const equalsButton = document.querySelector(".equals");
 equalsButton.addEventListener("click", equalsPress);
 reset();
+const clearButton = document.querySelector(".clear");
+clearButton.addEventListener("click", reset);
 
 function equalsPress() {
   doMath();
