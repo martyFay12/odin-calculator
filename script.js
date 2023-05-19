@@ -27,9 +27,30 @@ plusMinusButton.addEventListener("click", plusMinus);
 percentButton.addEventListener("click", percentage);
 
 function display() {
-  displaySection1.textContent = operand1;
+  operand1.length > 9
+    ? writeSmaller(1)
+    : (displaySection1.textContent = operand1);
+  operand2.length > 9
+    ? writeSmaller(2)
+    : (displaySection3.textContent = operand2);
   displaySection2.textContent = operationSaved;
-  displaySection3.textContent = operand2;
+}
+
+function writeSmaller(selector) {
+  selector === 1
+    ? (displaySection1.textContent = shortScientific(operand1))
+    : (displaySection3.textContent = shortScientific(operand2));
+}
+
+function shortScientific(string) {
+  const num = Number(string);
+  const numInSciNot = {};
+  [numInSciNot.coefficient, numInSciNot.exponent] = num
+    .toExponential()
+    .split("e")
+    .map((item) => Number(item));
+  let smallCoeff = Math.round(numInSciNot.coefficient * 100000000) / 100000000;
+  return `${smallCoeff}e${numInSciNot.exponent}`;
 }
 
 function percentage() {
@@ -120,21 +141,21 @@ function doMath() {
 }
 
 function mathAdd() {
-  operand1 = Number(operand1) + Number(operand2);
+  operand1 = (Number(operand1) + Number(operand2)).toString();
   operand2 = "";
   operationSaved = "";
   return true;
 }
 
 function mathSub() {
-  operand1 = Number(operand1) - Number(operand2);
+  operand1 = (Number(operand1) - Number(operand2)).toString();
   operand2 = "";
   operationSaved = "";
   return true;
 }
 
 function mathMult() {
-  operand1 = Number(operand1) * Number(operand2);
+  operand1 = (Number(operand1) * Number(operand2)).toString();
   operand2 = "";
   operationSaved = "";
   return true;
@@ -142,7 +163,7 @@ function mathMult() {
 
 function mathDiv() {
   if (Number(operand2) === 0) return divisionByZero();
-  operand1 = Number(operand1) / Number(operand2);
+  operand1 = (Number(operand1) / Number(operand2)).toString();
   operand2 = "";
   operationSaved = "";
   return true;
