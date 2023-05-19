@@ -73,10 +73,12 @@ button {
   background-color: rgb(255, 90, 30);
 }
 
-.operation {
+.operation,
+.equals {
   background-color: rgb(248, 248, 135);
 }
 
-.operation:hover {
+.operation:hover,
+.equals:hover {
   background-color: rgb(192, 192, 88);
 }
