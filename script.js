@@ -10,6 +10,7 @@ const decimalButton = document.querySelector(".decimal-digit");
 const equalsButton = document.querySelector(".equals");
 const clearButton = document.querySelector(".clear");
 const plusMinusButton = document.querySelector(".plus-minus");
+const percentButton = document.querySelector(".percent");
 
 // ADD EVENT LISTENERS
 digits.forEach((digit) => digit.addEventListener("click", recordDigit));
@@ -20,6 +21,16 @@ equalsButton.addEventListener("click", equalsPress);
 reset();
 clearButton.addEventListener("click", reset);
 plusMinusButton.addEventListener("click", plusMinus);
+percentButton.addEventListener("click", percentage);
+
+function percentage() {
+  operandFlag
+    ? (operand1 = Number(operand1) / 100)
+    : (operand2 = Number(operand2) / 100);
+  console.log(
+    `operand1: ${operand1}, operand2: ${operand2}, operation: ${operationSaved}, operationflag:${operandFlag}`
+  );
+}
 
 function plusMinus() {
   if (operandFlag) {
