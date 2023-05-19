@@ -42,6 +42,7 @@ function recordOperation() {
   if (operationSaved) {
     // already an operation saved
     doMath();
+    operandFlag = !operandFlag;
   }
   operationSaved = this.textContent;
   operandFlag = !operandFlag;
@@ -65,13 +66,20 @@ function doMath() {
 }
 
 function mathAdd() {
-  return 0;
+  operand1 = Number(operand1) + Number(operand2);
+  operand2 = "";
+  operationSaved = "";
 }
 
 function mathMult() {
-  return 1;
+  operand1 = Number(operand1) * Number(operand2);
+  operand2 = "";
+  operationSaved = "";
 }
 
 function mathDiv() {
-  return 0;
+  if (Number(operand2) === 0) return divisionByZero();
+  operand1 = Number(operand1) / Number(operand2);
+  operand2 = "";
+  operationSaved = "";
 }
