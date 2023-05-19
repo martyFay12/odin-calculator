@@ -27,8 +27,12 @@ clearButton.addEventListener("click", reset);
 plusMinusButton.addEventListener("click", plusMinus);
 percentButton.addEventListener("click", percentage);
 decimalButton.addEventListener("click", recordDigit);
-window.addEventListener("keydown", keyDigit);
+window.addEventListener("keydown", buttonDown);
 
+function buttonDown(event) {
+  equalsPress(event);
+  keyDigit(event);
+}
 function display() {
   operand1.length > 9
     ? writeSmaller(1)
@@ -80,7 +84,9 @@ function plusMinus() {
   display();
 }
 
-function equalsPress() {
+function equalsPress(event) {
+  if (event.key !== "Enter" && event.key !== "=" && this.textContent !== "=")
+    return;
   if (doMath()) {
     acceptDecimalFlag = true;
     operandFlag = false;
