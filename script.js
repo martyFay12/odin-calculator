@@ -1,7 +1,7 @@
 let operandFlag = true;
 let acceptDecimalFlag = true;
-let operand1 = "";
-let operand2 = "";
+let operand1 = "80085";
+let operand2 = "80085";
 let operationSaved = "";
 
 // SELECT BUTTONS
@@ -22,18 +22,20 @@ operations.forEach((operation) =>
   operation.addEventListener("click", recordOperation)
 );
 equalsButton.addEventListener("click", equalsPress);
-reset();
 clearButton.addEventListener("click", reset);
 plusMinusButton.addEventListener("click", plusMinus);
 percentButton.addEventListener("click", percentage);
 decimalButton.addEventListener("click", recordDigit);
 window.addEventListener("keydown", buttonDown);
+display();
 
 function buttonDown(event) {
   equalsPress(event);
   keyDigit(event);
   percentage(event);
   keyOperation(event);
+  reset(event);
+  backspace(event);
 }
 function display() {
   operand1.length > 9
@@ -98,7 +100,8 @@ function equalsPress(event) {
   display();
 }
 
-function reset() {
+function reset(event) {
+  if (event.key !== "c" && this.textContent !== "AC") return;
   operandFlag = true;
   operand1 = "";
   operand2 = "";
@@ -119,6 +122,7 @@ function keyDigit(event) {
   display();
   if (digit === ".") acceptDecimalFlag = false;
 }
+
 function recordDigit() {
   const digit = this.textContent;
   if (digit === "." && !acceptDecimalFlag) return;
@@ -160,6 +164,12 @@ function recordOperation() {
   operandFlag = false;
   display();
   acceptDecimalFlag = true;
+}
+
+function backspace(event) {
+  if (event.key !== "Backspace" || operand2 === "") return;
+  operand2 = operand2.substring(0, operand2.length - 1);
+  display();
 }
 
 function operandsAccepted() {
