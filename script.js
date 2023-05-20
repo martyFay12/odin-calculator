@@ -33,6 +33,7 @@ function buttonDown(event) {
   equalsPress(event);
   keyDigit(event);
   percentage(event);
+  keyOperation(event);
 }
 function display() {
   operand1.length > 9
@@ -124,6 +125,28 @@ function recordDigit() {
   operandFlag ? (operand1 += digit) : (operand2 += digit);
   display();
   if (digit === ".") acceptDecimalFlag = false;
+}
+
+function keyOperation(event) {
+  if (
+    event.key !== "*" &&
+    event.key !== "+" &&
+    event.key !== "-" &&
+    event.key !== "/"
+  ) {
+    console.log("exiting because none entered");
+    return;
+  }
+  if (operationSaved) {
+    // already an operation saved
+    if (doMath()) {
+      operandFlag = !operandFlag;
+    } else return;
+  }
+  operationSaved = event.key;
+  operandFlag = false;
+  display();
+  acceptDecimalFlag = true;
 }
 
 function recordOperation() {
