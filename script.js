@@ -1,7 +1,7 @@
 let operandFlag = true;
 let acceptDecimalFlag = true;
-let operand1 = "80085";
-let operand2 = "80085";
+let operand1 = "2023";
+let operand2 = "100";
 let operationSaved = "";
 
 // SELECT BUTTONS
