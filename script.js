@@ -65,7 +65,8 @@ function shortScientific(string) {
 }
 
 function percentage(event) {
-  if (event.key !== "%" && this.textContent !== "%") return;
+  const wasEventPercent = event.key === "%" || this.textContent === "%";
+  if (!wasEventPercent) return;
   operandFlag
     ? (operand1 = Number(operand1) / 100)
     : (operand2 = Number(operand2) / 100);
@@ -90,18 +91,20 @@ function plusMinus() {
 }
 
 function equalsPress(event) {
-  if (event.key !== "Enter" && event.key !== "=" && this.textContent !== "=")
-    return;
+  const equalsEvent =
+    event.key === "Enter" || event.key === "=" || this.textContent === "=";
+  if (!equalsEvent) return;
   if (doMath()) {
+    // math was successfully completed
     acceptDecimalFlag = true;
     operandFlag = false;
   }
-  if (operand1 === "" || operand1 === "." || operand1 === "-") operand = true;
   display();
 }
 
 function reset(event) {
-  if (event.key !== "c" && this.textContent !== "AC") return;
+  const clearEvent = event.key === "c" || this.textContent === "AC";
+  if (!clearEvent) return;
   operandFlag = true;
   operand1 = "";
   operand2 = "";
@@ -115,9 +118,10 @@ function isNumeric(string) {
 }
 
 function keyDigit(event) {
-  if (!isNumeric(event.key) && event.key !== ".") return;
+  const numberKeyPressed =
+    isNumeric(event.key) || (event.key === "." && acceptDecimalFlag);
+  if (!numberKeyPressed) return;
   const digit = event.key;
-  if (digit === "." && !acceptDecimalFlag) return;
   operandFlag ? (operand1 += digit) : (operand2 += digit);
   display();
   if (digit === ".") acceptDecimalFlag = false;
@@ -157,6 +161,7 @@ function recordOperation() {
   if (operationSaved) {
     // already an operation saved
     if (doMath()) {
+      // Math successfully completed
       operandFlag = !operandFlag;
     } else return;
   }
@@ -167,8 +172,13 @@ function recordOperation() {
 }
 
 function backspace(event) {
-  if (event.key !== "Backspace" || operand2 === "") return;
-  operand2 = operand2.substring(0, operand2.length - 1);
+  const backspaceEvent =
+    event.key === "Backspace" &&
+    ((operandFlag && operand1 !== "") || (!operandFlag && operand2 !== ""));
+  if (!backspaceEvent) return;
+  operandFlag
+    ? (operand1 = operand1.substring(0, operand1.length - 1))
+    : (operand2 = operand2.substring(0, operand2.length - 1));
   display();
 }
 
